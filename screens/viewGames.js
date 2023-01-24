@@ -445,7 +445,7 @@ const ViewGames = ({ navigation, route }) => {
       }
     }
     if (!found) {
-      if (game.myScore === -1 || game.theirScore === -1) {
+      if (game.myScore === -1 && game.theirScore === -1) {
         Alert.alert(
           "Warning",
           "This game still has no actions, it cannot be downloaded."

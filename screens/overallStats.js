@@ -71,10 +71,11 @@ const OverallStats = ({ navigation }) => {
     let localPlayers = await new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          "select * from player",
+          "select DISTINCT playerName from actionPerformed where playerName IS NOT NULL AND playerName != 'UNKNOWN';",
           [],
           (_, { rows: { _array } }) => {
             resolve(_array);
+            console.log("localPlayers", _array);
           },
           (_, error) => {
             reject(error);
@@ -86,7 +87,7 @@ const OverallStats = ({ navigation }) => {
 
     // add players on mysql to local storage
     let playerNames = localPlayers.map((player) => {
-      return player.name;
+      return player.playerName;
     });
 
     db.transaction((tx) => {

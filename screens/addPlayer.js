@@ -212,7 +212,11 @@ const AddPlayer = () => {
                 return response.data;
               })
               .catch(function (error) {
-                console.log(error);
+                console.log("e", error);
+                Alert.alert(
+                  "Error",
+                  "There was an error deleting the player. Please try again."
+                );
               });
             setPlayers((currentPlayers) => {
               return currentPlayers.filter((player) => player !== playerName);
