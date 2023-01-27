@@ -20,6 +20,7 @@ import PlayersOverallStats from "./screens/playersOverallStats";
 import TeamStats from "./screens/TeamStats";
 import LineBuilder from "./screens/lineBuilder";
 import Login from "./screens/login";
+import ViewPractices from "./screens/viewPractices";
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
@@ -217,6 +218,20 @@ const MyStack = () => {
           component={LineBuilder}
           options={{
             title: "Line Builder",
+            headerStyle: {
+              backgroundColor: "#513e85",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="View Practices"
+          component={ViewPractices}
+          options={{
+            title: "View Practices",
             headerStyle: {
               backgroundColor: "#513e85",
             },

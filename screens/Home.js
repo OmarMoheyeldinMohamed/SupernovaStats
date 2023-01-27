@@ -56,6 +56,10 @@ const Home = ({ route, navigation }) => {
     navigation.navigate("Team Stats");
   }
 
+  function onViewPracticesPress() {
+    navigation.navigate("View Practices", { isAdmin: isAdmin });
+  }
+
   async function getAllPlayers() {
     // use mysql to get all players
 
@@ -229,6 +233,12 @@ const Home = ({ route, navigation }) => {
       onPress: onTeamStatsPress,
       disabled: false,
       image: require("../assets/buttonIcons/teamStat.png"),
+    },
+    {
+      text: "View Attendance",
+      onPress: onViewPracticesPress,
+      disabled: false,
+      image: require("../assets/buttonIcons/attendance.png"),
     },
   ];
 

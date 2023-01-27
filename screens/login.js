@@ -302,6 +302,47 @@ const Login = ({ navigation, route }) => {
         }
       );
     });
+
+    db.transaction((tx) => {
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS practice 
+        (
+        id INTEGER AUTO_INCREMENT PRIMARY KEY,
+        date DATE NOT NULL, 
+        lastUpdate INTEGER DEFAULT 0 
+        );
+        `,
+        [],
+        (tx, results) => {
+          // console.log("Practice table created");
+        },
+        (tx, error) => {
+          console.log("Error creating practice table");
+        }
+      );
+    });
+
+    db.transaction((tx) => {
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS playersToCome
+        (
+        practiceId INTEGER NOT NULL,
+        playerName varchar(25) NOT NULL,
+        isExecused tinyint(1) NOT NULL DEFAULT 0, 
+        isAttending tinyint(1) NOT NULL,
+        PRIMARY KEY (practiceId, playerName),
+        FOREIGN KEY (playerName) REFERENCES player (name) ON UPDATE CASCADE ON DELETE CASCADE,
+        FOREIGN KEY (practiceId) REFERENCES practice (id) ON UPDATE CASCADE ON DELETE CASCADE
+        );`,
+        [],
+        (tx, results) => {
+          // console.log("playersToCome table created");
+        },
+        (tx, error) => {
+          console.log("Error creating playersToCome table");
+        }
+      );
+    });
     getAllPlayers();
 
     await new Promise((resolve, reject) => {
