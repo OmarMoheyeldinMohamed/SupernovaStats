@@ -143,8 +143,12 @@ const PlayersPractice = ({ route, navigation }) => {
                     style={{ width: 30, height: 30, marginHorizontal: 10 }}
                   ></Image>
                   <Text>{item.total - item.attended - item.excused}</Text>
+                  <Image
+                    source={require("../assets/icons/excused.png")}
+                    style={{ width: 30, height: 30, marginHorizontal: 10 }}
+                  ></Image>
+                  <Text>{item.excused}</Text>
                 </View>
-                <Text>Excused:{" " + item.excused}</Text>
               </View>
               <View style={{ width: "100%", borderBottomWidth: 0.5 }}></View>
             </Pressable>

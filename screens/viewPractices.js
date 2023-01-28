@@ -980,8 +980,13 @@ const ViewPractices = ({ route, navigation }) => {
                     style={{ width: 30, height: 30, marginHorizontal: 10 }}
                   ></Image>
                   <Text>{item[3] - item[1] - item[2]}</Text>
+                  <Image
+                    source={require("../assets/icons/excused.png")}
+                    style={{ width: 30, height: 30, marginHorizontal: 10 }}
+                  ></Image>
+                  <Text>{item[2]}</Text>
                 </View>
-                <Text>Excused:{" " + item[2]}</Text>
+                {/* <Text>Excused:{" " + item[2]}</Text> */}
                 <View style={{ width: "100%", borderBottomWidth: 0.5 }}></View>
               </View>
             </Pressable>
