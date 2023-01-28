@@ -53,6 +53,10 @@ const ViewPractices = ({ route, navigation }) => {
     }
   };
 
+  const onPlayerPracticePress = () => {
+    navigation.navigate("Player Attendance");
+  };
+
   async function deletePractice(id) {
     setVisible(true);
     await axios
@@ -887,6 +891,8 @@ const ViewPractices = ({ route, navigation }) => {
           onPress={addModal}
           width={100}
         />
+        <MyButton text="Players" onPress={onPlayerPracticePress} width={100} />
+
         <MyButton text="Refresh" onPress={refresh} width={100} />
       </View>
       <View style={{ width: "100%", borderBottomWidth: 0.5 }}></View>
