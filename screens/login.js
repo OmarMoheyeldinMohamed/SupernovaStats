@@ -20,6 +20,7 @@ const Login = ({ navigation, route }) => {
 
   const logout = params ? params.logout : false;
   async function getAllPlayers() {
+    console.log("getting all players");
     // use mysql to get all players
 
     let localPlayers = await new Promise((resolve, reject) => {
@@ -451,7 +452,7 @@ const Login = ({ navigation, route }) => {
     // });
 
     if (logout === true) {
-      return;
+      getAllPlayers();
     } else {
       onScreenLoad();
     }

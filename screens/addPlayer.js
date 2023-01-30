@@ -51,7 +51,8 @@ function playerInfotoNames(playersInfo) {
   return playerNames;
 }
 
-const AddPlayer = () => {
+const AddPlayer = ({ route, navigation }) => {
+  const isAdmin = route.params.isAdmin;
   const [enteredName, setEnteredName] = useState("");
   function nameInputHandler(enteredText) {
     setEnteredName(enteredText);
@@ -194,6 +195,9 @@ const AddPlayer = () => {
   const [visible, setVisible] = useState(true);
 
   function deletePlayerHandler(playerName) {
+    if (!isAdmin) {
+      return;
+    }
     Alert.alert(
       "Are you sure?",
       "Do you really want to delete this player?",
@@ -341,6 +345,7 @@ const AddPlayer = () => {
             color={"#2bbf0a"}
             textColor={"#000000"}
             text="Add Player"
+            disabled={!isAdmin}
           />
         </View>
       </View>

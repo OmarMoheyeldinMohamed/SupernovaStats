@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, Alert } from "react-native";
 
 function MyButton(props) {
   let width = props.width ? props.width : 250;
@@ -58,7 +58,12 @@ function MyButton(props) {
       ...buttonStyle,
       ...{ backgroundColor: "#808080" },
     };
-    onPress = () => {};
+    onPress = () => {
+      Alert.alert(
+        "Warning",
+        "This feature is not available for this account type."
+      );
+    };
   }
 
   // buttonStyle = {

@@ -33,11 +33,11 @@ const db = SQLite.openDatabase("games.db");
 const Home = ({ route, navigation }) => {
   const isAdmin = route.params.isAdmin;
   function onPlayerPress() {
-    navigation.navigate("Add Player");
+    navigation.navigate("Add Player", { isAdmin: isAdmin });
   }
 
   function onAddGamePress() {
-    navigation.navigate("Add Game");
+    navigation.navigate("Add Game", { isAdmin: isAdmin });
   }
 
   function onViewGamesPress() {

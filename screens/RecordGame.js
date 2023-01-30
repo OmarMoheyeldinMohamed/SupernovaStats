@@ -2145,7 +2145,7 @@ const RecordGame = ({ route, navigation }) => {
                 >
                   Bench:
                 </Text>
-                <View style={{ flex: 0, height: heightBench }}>
+                <View style={{ flex: 0 }}>
                   <FlatList
                     data={playersOnBench}
                     renderItem={({ item }) => (

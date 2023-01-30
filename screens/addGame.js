@@ -92,7 +92,8 @@ async function addOpponenttoDB(name) {
     });
 }
 
-const AddGame = ({ navigation }) => {
+const AddGame = ({ navigation, route }) => {
+  const isAdmin = route.params.isAdmin;
   const db = SQLite.openDatabase("games.db");
   const [visible, setVisible] = useState(true);
 
@@ -348,6 +349,7 @@ const AddGame = ({ navigation }) => {
             color={"#2bbf0a"}
             textColor={"#000000"}
             text="Add Competition"
+            // disabled={!isAdmin}
           />
         </View>
         <Modal
@@ -415,6 +417,7 @@ const AddGame = ({ navigation }) => {
             color={"#2bbf0a"}
             textColor={"#000000"}
             text="Add Opponent"
+            // disabled={!isAdmin}
           />
         </View>
         <Modal
@@ -479,6 +482,7 @@ const AddGame = ({ navigation }) => {
           text="Add Game"
           alignItems="center"
           justifyContent="center"
+          disabled={!isAdmin}
         />
       </View>
       {visible && (

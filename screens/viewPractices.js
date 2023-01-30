@@ -925,25 +925,27 @@ const ViewPractices = ({ route, navigation }) => {
                 toggleModal2();
               }}
               onLongPress={() => {
-                Alert.alert(
-                  "Delete Practice",
-                  "Are you sure you want to delete this practice?",
-                  [
-                    {
-                      text: "Cancel",
-                      onPress: () => console.log("Cancel Pressed"),
-                      style: "cancel",
-                    },
-                    {
-                      text: "Yes",
-                      onPress: () => {
-                        deletePractice(item[4]);
+                if (isAdmin) {
+                  Alert.alert(
+                    "Delete Practice",
+                    "Are you sure you want to delete this practice?",
+                    [
+                      {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel",
                       },
-                      style: "destructive",
-                    },
-                  ],
-                  { cancelable: false }
-                );
+                      {
+                        text: "Yes",
+                        onPress: () => {
+                          deletePractice(item[4]);
+                        },
+                        style: "destructive",
+                      },
+                    ],
+                    { cancelable: true }
+                  );
+                }
               }}
               style={({ pressed }) => pressed && { opacity: 0.5 }}
             >
