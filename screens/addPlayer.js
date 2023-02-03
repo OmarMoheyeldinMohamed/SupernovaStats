@@ -208,15 +208,18 @@ const AddPlayer = ({ route, navigation }) => {
           text: "Yes",
           style: "destructive",
           onPress: async () => {
+            setVisible(true);
             await axios({
               method: "delete",
               url: ip + "/players/" + playerName,
             })
               .then(function (response) {
+                setVisible(false);
                 return response.data;
               })
               .catch(function (error) {
                 console.log("e", error);
+                setVisible(false);
                 Alert.alert(
                   "Error",
                   "There was an error deleting the player. Please try again."
@@ -442,7 +445,7 @@ const styles = StyleSheet.create({
     color: "#120438",
     borderRadius: 8,
     flex: 3,
-    padding: 10,
+    padding: 15,
     margin: 3,
   },
   lottie: {

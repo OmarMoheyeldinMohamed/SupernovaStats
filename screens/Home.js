@@ -59,6 +59,9 @@ const Home = ({ route, navigation }) => {
   function onViewPracticesPress() {
     navigation.navigate("View Practices", { isAdmin: isAdmin });
   }
+  function onViewTracksPress() {
+    navigation.navigate("Tracks", { isAdmin: isAdmin });
+  }
 
   async function getAllPlayers() {
     // use mysql to get all players
@@ -240,6 +243,12 @@ const Home = ({ route, navigation }) => {
       disabled: false,
       image: require("../assets/buttonIcons/attendance.png"),
     },
+    {
+      text: "View Tracks",
+      onPress: onViewTracksPress,
+      disabled: false,
+      image: require("../assets/buttonIcons/track.png"),
+    },
   ];
 
   const logout = () => {
@@ -282,9 +291,7 @@ const Home = ({ route, navigation }) => {
   }, [navigation]);
   return (
     <View style={styles.container}>
-      <View
-        style={{ flex: 4, alignContent: "center", justifyContent: "center" }}
-      >
+      <View style={{ alignContent: "center", justifyContent: "center" }}>
         <Image style={styles.image} source={require("../assets/logo.png")} />
       </View>
       <View
@@ -293,12 +300,13 @@ const Home = ({ route, navigation }) => {
           alignContent: "center",
           justifyContent: "space-between",
           alignItems: "center",
-          flex: 5,
+          // flex: 1,
         }}
       >
         <FlatList
           style={{
             width: "100%",
+            // flex: 1,
 
             // alignItems: "center",
           }}
@@ -377,11 +385,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    alignContent: "center",
     flexDirection: "column",
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 175,
+    height: 175,
     margin: 20,
     marginBottom: 20,
   },

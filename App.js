@@ -22,7 +22,8 @@ import LineBuilder from "./screens/lineBuilder";
 import Login from "./screens/login";
 import ViewPractices from "./screens/viewPractices";
 import PlayersPractice from "./screens/playersPractice";
-
+import ViewTracks from "./screens/viewTracks";
+import TrackPlayers from "./screens/trackPlayers";
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
@@ -248,6 +249,34 @@ const MyStack = () => {
           component={PlayersPractice}
           options={{
             title: "Player Attendance",
+            headerStyle: {
+              backgroundColor: "#513e85",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Tracks"
+          component={ViewTracks}
+          options={{
+            title: "Tracks",
+            headerStyle: {
+              backgroundColor: "#513e85",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Track Players"
+          component={TrackPlayers}
+          options={{
+            title: "Track Players",
             headerStyle: {
               backgroundColor: "#513e85",
             },
