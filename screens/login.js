@@ -84,6 +84,8 @@ const Login = ({ navigation, route }) => {
                 newPlayers[i].password +
                 "','" +
                 newPlayers[i].isAdmin +
+                "','" +
+                newPlayers[i].isTreasurer +
                 "'),";
             }
 
@@ -102,6 +104,8 @@ const Login = ({ navigation, route }) => {
               newPlayers[newPlayers.length - 1].password +
               "','" +
               newPlayers[newPlayers.length - 1].isAdmin +
+              "','" +
+              newPlayers[newPlayers.length - 1].isTreasurer +
               "')";
 
             // add new players to local storage
@@ -109,7 +113,7 @@ const Login = ({ navigation, route }) => {
             await new Promise((resolve, reject) => {
               db.transaction((tx) => {
                 tx.executeSql(
-                  "insert into player (name, email, major, number, phone, password, isAdmin) values " +
+                  "insert into player (name, email, major, number, phone, password, isAdmin, isTreasurer) values " +
                     values,
                   [],
                   (_, { rows: { _array } }) => {
@@ -210,6 +214,58 @@ const Login = ({ navigation, route }) => {
             }
           }
         }
+        // check if any player isTreasurer field is changed
+        for (let i = 0; i < players.length; i++) {
+          let player = players[i];
+          let localPlayer = localPlayers.filter(
+            (localPlayer) => localPlayer.name === player.name
+          )[0];
+          if (localPlayer !== undefined) {
+            if (localPlayer.isTreasurer !== player.isTreasurer) {
+              await new Promise((resolve, reject) => {
+                db.transaction((tx) => {
+                  tx.executeSql(
+                    "update player set isTreasurer = " +
+                      player.isTreasurer +
+                      " where name = '" +
+                      player.name +
+                      "'",
+                    [],
+                    (_, { rows: { _array } }) => {
+                      resolve(_array);
+                    }
+                  );
+                });
+              });
+            }
+          }
+        }
+        // check if any player email field is changed
+        for (let i = 0; i < players.length; i++) {
+          let player = players[i];
+          let localPlayer = localPlayers.filter(
+            (localPlayer) => localPlayer.name === player.name
+          )[0];
+          if (localPlayer !== undefined) {
+            if (localPlayer.email !== player.email) {
+              await new Promise((resolve, reject) => {
+                db.transaction((tx) => {
+                  tx.executeSql(
+                    "update player set email = '" +
+                      player.email +
+                      "' where name = '" +
+                      player.name +
+                      "'",
+                    [],
+                    (_, { rows: { _array } }) => {
+                      resolve(_array);
+                    }
+                  );
+                });
+              });
+            }
+          }
+        }
 
         return response.data;
       })
@@ -246,6 +302,7 @@ const Login = ({ navigation, route }) => {
           email varchar(50) DEFAULT NULL,
           password varchar(50) DEFAULT NULL,
           isAdmin tinyint(1) DEFAULT 0,
+          isTreasurer tinyint(1) DEFAULT 0,
           PRIMARY KEY (name)
         )`,
         [],
@@ -385,12 +442,115 @@ const Login = ({ navigation, route }) => {
         }
       );
     });
+    db.transaction((tx) => {
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS updates
+        (
+        number INTEGER PRIMARY KEY
+        );`,
+        [],
+        (tx, results) => {
+          // console.log("playersToCome table created");
+        },
+        (tx, error) => {
+          console.log("Error creating updates table");
+          console.log(error);
+        }
+      );
+    });
+    db.transaction((tx) => {
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS treasury
+        (
+          id INTEGER PRIMARY KEY,
+          name VARCHAR(50) NOT NULL, 
+          paidOutside INTEGER NOT NULL DEFAULT 0,
+          lastUpdate INTEGER DEFAULT 0 
+        );`,
+        [],
+        (tx, results) => {
+          // console.log("playersToCome table created");
+        },
+        (tx, error) => {
+          console.log("Error creating treasury table");
+          console.log(error);
+        }
+      );
+    });
+    db.transaction((tx) => {
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS treasuryEntry
+        (
+        treasuryId INTEGER NOT NULL,
+        playerName varchar(25) NOT NULL,
+        amountOwed INTEGER(1) NOT NULL DEFAULT 0, 
+        amountPaid INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (treasuryId, playerName),
+        FOREIGN KEY (playerName) REFERENCES player (name) ON UPDATE CASCADE ON DELETE CASCADE,
+        FOREIGN KEY (treasuryId) REFERENCES treasury (id) ON UPDATE CASCADE ON DELETE CASCADE
+        );`,
+        [],
+        (tx, results) => {
+          // console.log("playersToCome table created");
+        },
+        (tx, error) => {
+          console.log("Error creating treasuryEntry table");
+        }
+      );
+    });
+
     getAllPlayers();
 
     await new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          "select name, isAdmin from player;",
+          "select * from updates",
+          [],
+          async (_, { rows: { _array } }) => {
+            if (_array.length > 0) {
+              resolve(_array[0].number);
+            } else {
+              await new Promise((resolve, reject) => {
+                db.transaction((tx) => {
+                  tx.executeSql(
+                    "insert into updates (number) values (0)",
+                    [],
+                    (_, { rows: { _array } }) => {
+                      resolve(0);
+                    },
+                    (_, error) => {
+                      reject(error);
+                    }
+                  );
+                });
+              });
+              await new Promise((resolve, reject) => {
+                db.transaction((tx) => {
+                  tx.executeSql(
+                    "ALTER TABLE player ADD COLUMN isTreasurer tinyint(1) DEFAULT 0;",
+                    [],
+                    (_, { rows: { _array } }) => {
+                      resolve(0);
+                    },
+                    (_, error) => {
+                      reject(error);
+                    }
+                  );
+                });
+              });
+            }
+          },
+          (_, error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+
+    await new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "select name, isAdmin, isTreasurer from player;",
           [],
           (_, { rows: { _array } }) => {
             resolve(_array);
@@ -410,18 +570,26 @@ const Login = ({ navigation, route }) => {
               let name = _array[0].name;
               let player = players.filter((player) => player.name === name)[0];
               let isAdmin = 0;
+              let isTreasurer = 0;
 
               if (player !== undefined) {
                 isAdmin = player.isAdmin;
+                isTreasurer = player.isTreasurer;
               }
               isAdmin = isAdmin === 1 ? true : false;
+              isTreasurer = isTreasurer === 1 ? true : false;
               // navigation.navigate("Home", { name: name, isAdmin: isAdmin });
+              // console.log("isTreasurer: " + isTreasurer);
               navigation.reset({
                 index: 0,
                 routes: [
                   {
                     name: "Home",
-                    params: { name: name, isAdmin: isAdmin },
+                    params: {
+                      name: name,
+                      isAdmin: isAdmin,
+                      isTreasurer: isTreasurer,
+                    },
                   },
                 ],
               });
@@ -518,7 +686,7 @@ const Login = ({ navigation, route }) => {
     let players = await new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          "select name, email, password, isAdmin from player",
+          "select name, email, password, isAdmin, isTreasurer from player",
           [],
           (_, { rows: { _array } }) => {
             // console.log("Players", _array);
@@ -576,7 +744,11 @@ const Login = ({ navigation, route }) => {
         routes: [
           {
             name: "Home",
-            params: { name: player.name, isAdmin: player.isAdmin },
+            params: {
+              name: player.name,
+              isAdmin: player.isAdmin,
+              isTreasurer: player.isTreasurer,
+            },
           },
         ],
       });

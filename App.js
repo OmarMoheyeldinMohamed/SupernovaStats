@@ -24,6 +24,8 @@ import ViewPractices from "./screens/viewPractices";
 import PlayersPractice from "./screens/playersPractice";
 import ViewTracks from "./screens/viewTracks";
 import TrackPlayers from "./screens/trackPlayers";
+import ViewTreasury from "./screens/viewTreasury";
+import PlayersTreasury from "./screens/playersTreasury";
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
@@ -277,6 +279,34 @@ const MyStack = () => {
           component={TrackPlayers}
           options={{
             title: "Track Players",
+            headerStyle: {
+              backgroundColor: "#513e85",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Treasury"
+          component={ViewTreasury}
+          options={{
+            title: "Treasury",
+            headerStyle: {
+              backgroundColor: "#513e85",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Treasury Players"
+          component={PlayersTreasury}
+          options={{
+            title: "Treasury Players",
             headerStyle: {
               backgroundColor: "#513e85",
             },

@@ -6,7 +6,7 @@ import axios from "axios";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import * as SQLite from "expo-sqlite";
 import { FlatList } from "react-native-gesture-handler";
-import { Dimensions } from "react-native";
+import { Dimensions, Alert } from "react-native";
 const screenWidth = Dimensions.get("window").width;
 // const ip = "http://192.168.76.177:3000";
 const ip = "https://supernovabackend.onrender.com";
@@ -32,6 +32,7 @@ const db = SQLite.openDatabase("games.db");
 
 const Home = ({ route, navigation }) => {
   const isAdmin = route.params.isAdmin;
+  const isTreasurer = route.params.isTreasurer;
   function onPlayerPress() {
     navigation.navigate("Add Player", { isAdmin: isAdmin });
   }
@@ -61,6 +62,27 @@ const Home = ({ route, navigation }) => {
   }
   function onViewTracksPress() {
     navigation.navigate("Tracks", { isAdmin: isAdmin });
+  }
+
+  function onTreasuryPress() {
+    if (isTreasurer) {
+      navigation.navigate("Treasury", { isTreasurer: isTreasurer });
+    } else {
+      Alert.alert(
+        "Warning",
+        "Only treasurer is allowed to access this feature",
+        [
+          {
+            text: "OK",
+            // onPress: () => console.log("OK Pressed"),
+            style: "cancel",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+    }
   }
 
   async function getAllPlayers() {
@@ -248,6 +270,12 @@ const Home = ({ route, navigation }) => {
       onPress: onViewTracksPress,
       disabled: false,
       image: require("../assets/buttonIcons/track.png"),
+    },
+    {
+      text: "Treasury",
+      onPress: onTreasuryPress,
+      disabled: !isTreasurer,
+      image: require("../assets/buttonIcons/treasury.png"),
     },
   ];
 
