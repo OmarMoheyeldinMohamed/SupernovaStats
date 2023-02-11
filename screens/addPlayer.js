@@ -220,11 +220,67 @@ const AddPlayer = ({ route, navigation }) => {
               .catch(function (error) {
                 console.log("e", error);
                 setVisible(false);
-                Alert.alert(
-                  "Error",
-                  "There was an error deleting the player. Please try again."
+              });
+            await new Promise((resolve, reject) => {
+              db.transaction((tx) => {
+                tx.executeSql(
+                  "delete from player where name = ?",
+                  [playerName],
+                  (_, { rows: { _array } }) => {
+                    resolve(_array);
+                  },
+                  (_, error) => {
+                    reject(error);
+                  }
                 );
               });
+            });
+
+            await new Promise((resolve, reject) => {
+              db.transaction((tx) => {
+                tx.executeSql(
+                  "delete from playersToCome where name = ?",
+                  [playerName],
+                  (_, { rows: { _array } }) => {
+                    resolve(_array);
+                  },
+                  (_, error) => {
+                    reject(error);
+                  }
+                );
+              });
+            });
+
+            await new Promise((resolve, reject) => {
+              db.transaction((tx) => {
+                tx.executeSql(
+                  "delete from trackAttendance where name = ?",
+                  [playerName],
+                  (_, { rows: { _array } }) => {
+                    resolve(_array);
+                  },
+                  (_, error) => {
+                    reject(error);
+                  }
+                );
+              });
+            });
+
+            await new Promise((resolve, reject) => {
+              db.transaction((tx) => {
+                tx.executeSql(
+                  "delete from treasuryEntry where name = ?",
+                  [playerName],
+                  (_, { rows: { _array } }) => {
+                    resolve(_array);
+                  },
+                  (_, error) => {
+                    reject(error);
+                  }
+                );
+              });
+            });
+
             setPlayers((currentPlayers) => {
               return currentPlayers.filter((player) => player !== playerName);
             });
