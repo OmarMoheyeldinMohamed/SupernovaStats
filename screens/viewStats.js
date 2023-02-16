@@ -404,7 +404,7 @@ const ViewStats = ({ route, navigation }) => {
       );
     });
     db.transaction((tx) => {
-      //Deeps
+      //Catched Deeps
       tx.executeSql(
         `SELECT playerName, COUNT(*) FROM actionPerformed WHERE opponent=? AND gameTimestamp=? AND action="Deep" GROUP BY playerName ORDER BY COUNT(*) DESC`,
         [opponent, gameTimestamp],
@@ -431,13 +431,13 @@ const ViewStats = ({ route, navigation }) => {
             }
           });
 
-          setDeeps(deeps);
+          setCatchedDeeps(deeps);
         },
         (txObj, error) => console.log("Error", error)
       );
     });
     db.transaction((tx) => {
-      //Catched Deeps
+      //Deeps
       tx.executeSql(
         `SELECT associatedPlayer, COUNT(*) FROM actionPerformed WHERE opponent=? AND gameTimestamp=? AND action="Deep" GROUP BY associatedPlayer ORDER BY COUNT(*) DESC`,
         [opponent, gameTimestamp],
@@ -465,7 +465,7 @@ const ViewStats = ({ route, navigation }) => {
             }
           });
 
-          setCatchedDeeps(catchedDeeps);
+          setDeeps(catchedDeeps);
         },
         (txObj, error) => console.log("Error", error)
       );
@@ -582,7 +582,6 @@ const ViewStats = ({ route, navigation }) => {
             if (
               action.action === "Score" ||
               action.action === "Defence" ||
-              action.action === "Deep" ||
               action.action === "Callahan"
             ) {
               // console.log(action.player);
@@ -591,6 +590,9 @@ const ViewStats = ({ route, navigation }) => {
               }
 
               pm[action.player]["stat"] += 1;
+              if (action.action === "Callahan") {
+                pm[action.player]["stat"] += 1;
+              }
             } else if (
               action.action === "Throwaway" ||
               action.action === "Drop" ||

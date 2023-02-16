@@ -385,7 +385,8 @@ const ViewTracks = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-    getAllPlayers();
+    // getAllPlayers();
+    refresh();
   }, []);
 
   const tableHead = ["Name", "Attended", "Excused"];
@@ -960,7 +961,7 @@ const ViewTracks = ({ route, navigation }) => {
           }}
         >
           <LottieView
-            source={require("../assets/loading.json")}
+            source={require("../assets/loading1.json")}
             style={styles.lottie}
             autoPlay
           />

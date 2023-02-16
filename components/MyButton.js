@@ -59,10 +59,10 @@ function MyButton(props) {
       ...{ backgroundColor: "#808080" },
     };
     onPress = () => {
-      Alert.alert(
-        "Warning",
-        "This feature is not available for this account type."
-      );
+      // Alert.alert(
+      //   "Warning",
+      //   "This feature is not available for this account type."
+      // );
     };
   }
 

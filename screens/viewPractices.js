@@ -401,7 +401,8 @@ const ViewPractices = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-    getAllPlayers();
+    // getAllPlayers();
+    refresh();
   }, []);
 
   const tableHead = ["Name", "Attended", "Excused"];

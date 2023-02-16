@@ -880,7 +880,7 @@ const ViewTreasury = ({ route, navigation }) => {
               }}
             >
               <LottieView
-                source={require("../assets/loading.json")}
+                source={require("../assets/loading1.json")}
                 style={styles.lottie}
                 autoPlay
               />

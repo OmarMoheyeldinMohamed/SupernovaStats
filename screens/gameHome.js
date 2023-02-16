@@ -39,6 +39,8 @@ const GameHome = ({ route, navigation }) => {
   const db = SQLite.openDatabase("games.db");
 
   const [isCheckBoxDisabled, setIsCheckboxDisabled] = useState(false);
+  console.log(isCheckBoxDisabled);
+
   const [visible, setVisible] = useState(false);
   const isSuccessfull = useRef(false);
   const {
@@ -88,6 +90,10 @@ const GameHome = ({ route, navigation }) => {
   };
 
   async function onCheckboxChange(newValue) {
+    if (isCheckBoxDisabled) {
+      return;
+    }
+
     setToggleCheckBox(newValue);
 
     // let timeStamp = new Date(timestamp);
