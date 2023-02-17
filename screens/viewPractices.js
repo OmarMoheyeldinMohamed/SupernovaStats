@@ -403,7 +403,13 @@ const ViewPractices = ({ route, navigation }) => {
   useEffect(() => {
     // getAllPlayers();
     refresh();
+    getAllPlayers();
   }, []);
+
+  const refreshPage = async () => {
+    refresh();
+    getAllPlayers();
+  };
 
   const tableHead = ["Name", "Attended", "Excused"];
 
@@ -590,7 +596,6 @@ const ViewPractices = ({ route, navigation }) => {
     }
 
     setVisible(false);
-    getAllPlayers();
   };
   return (
     <View style={styles.container}>
@@ -894,7 +899,7 @@ const ViewPractices = ({ route, navigation }) => {
         />
         <MyButton text="Players" onPress={onPlayerPracticePress} width={100} />
 
-        <MyButton text="Refresh" onPress={refresh} width={100} />
+        <MyButton text="Refresh" onPress={refreshPage} width={100} />
       </View>
       <View style={{ width: "100%", borderBottomWidth: 0.5 }}></View>
       <FlatList

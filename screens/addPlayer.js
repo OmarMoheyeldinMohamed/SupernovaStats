@@ -63,9 +63,13 @@ const AddPlayer = ({ route, navigation }) => {
     let players = await axios({
       method: "get",
       url: ip + "/players",
-    }).then(function (response) {
-      return response.data;
-    });
+    })
+      .then(function (response) {
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     // get players on local storage
     let localPlayers = await new Promise((resolve, reject) => {
