@@ -407,7 +407,7 @@ const ViewPractices = ({ route, navigation }) => {
   }, []);
 
   const refreshPage = async () => {
-    refresh();
+    await refresh();
     getAllPlayers();
   };
 

@@ -393,7 +393,7 @@ const ViewTracks = ({ route, navigation }) => {
   const tableHead = ["Name", "Attended", "Excused"];
 
   const refreshPage = async () => {
-    refresh();
+    await refresh();
     getAllPlayers();
   };
 
