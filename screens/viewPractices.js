@@ -402,8 +402,7 @@ const ViewPractices = ({ route, navigation }) => {
 
   useEffect(() => {
     // getAllPlayers();
-    refresh();
-    getAllPlayers();
+    refreshPage();
   }, []);
 
   const refreshPage = async () => {

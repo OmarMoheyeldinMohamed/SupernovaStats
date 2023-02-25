@@ -484,7 +484,7 @@ const PLayerStats = ({ route, navigation }) => {
           <PieChart
             data={pieData}
             width={chartWidth}
-            height={150}
+            height={200}
             chartConfig={styles.chartConfig}
             accessor="value"
           />
@@ -495,7 +495,7 @@ const PLayerStats = ({ route, navigation }) => {
           <PieChart
             data={pieData2}
             width={chartWidth}
-            height={150}
+            height={200}
             chartConfig={styles.chartConfig}
             accessor="value"
           />

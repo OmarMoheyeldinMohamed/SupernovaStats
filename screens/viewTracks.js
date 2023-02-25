@@ -386,8 +386,7 @@ const ViewTracks = ({ route, navigation }) => {
 
   useEffect(() => {
     // getAllPlayers();
-    refresh();
-    getAllPlayers();
+    refreshPage();
   }, []);
 
   const tableHead = ["Name", "Attended", "Excused"];

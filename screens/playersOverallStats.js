@@ -501,7 +501,7 @@ const PlayersOverallStats = ({ navigation }) => {
           <PieChart
             data={pieData}
             width={screenWidth}
-            height={150}
+            height={200}
             chartConfig={styles.chartConfig}
             accessor="value"
           />
@@ -512,7 +512,7 @@ const PlayersOverallStats = ({ navigation }) => {
           <PieChart
             data={pieData2}
             width={screenWidth}
-            height={150}
+            height={200}
             chartConfig={styles.chartConfig}
             accessor="value"
           />
