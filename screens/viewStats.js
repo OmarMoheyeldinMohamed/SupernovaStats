@@ -7,14 +7,21 @@ import * as SQLite from "expo-sqlite";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 
 let playerImages = {
-  Mohey: require("../assets/players/Mohey.png"),
-  Mini: require("../assets/players/Mini.png"),
+  Abou: require("../assets/players/Abou.png"),
+  Carol: require("../assets/players/Carol.png"),
   Mariam: require("../assets/players/Mariam.png"),
-  Lord: require("../assets/players/Lord.png"),
-  Jala: require("../assets/players/Jala.png"),
-  Badr: require("../assets/players/Badr.png"),
-  Asfar: require("../assets/players/Asfar.png"),
-  Shoaib: require("../assets/players/Shoaib.png"),
+  Dof: require("../assets/players/Dof.png"),
+  Enany: require("../assets/players/Enany.png"),
+  Fatso: require("../assets/players/Fatso.png"),
+  Giratalla: require("../assets/players/Giratalla.png"),
+  Jimmy: require("../assets/players/Jimmy.png"),
+  Nada: require("../assets/players/Nada.png"),
+  Nour: require("../assets/players/Nour.png"),
+  Omario: require("../assets/players/Omario.png"),
+  Rouchdi: require("../assets/players/Rouchdi.png"),
+  Rowan: require("../assets/players/Rowan.png"),
+  Salma: require("../assets/players/Salma.png"),
+  Yasser: require("../assets/players/Yasser.png"),
   Any: require("../assets/players/Any.png"),
 };
 
